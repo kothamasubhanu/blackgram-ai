@@ -1,9 +1,14 @@
-tensorflow>=2.16.1
-gdown>=4.7.1
-numpy==1.23.5
+# Core dependencies
+tensorflow-cpu==2.16.1  # LTS version with best compatibility
+numpy==1.26.4  # Matches TF 2.16 requirements
+protobuf==3.20.3  # Exact version TF 2.16 needs
+h5py==3.11.0  # Minimum required by TF 2.16
+
+# Flask stack
 flask==2.2.5
 gunicorn==20.1.0
-pillow==9.3.0
-h5py==3.7.0
-protobuf==3.19.6  # Changed to compatible version
-typing-extensions==4.3.0
+pillow==10.3.0  # For image processing
+
+# Optional but recommended
+google-auth==2.29.0  # For Google Drive downloads
+gdown==4.7.1  # For backup model downloads
