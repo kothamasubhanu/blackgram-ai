@@ -1,8 +1,5 @@
-tmp_uploads/
-*.h5
-*.jpg
-*.png
+# Edit .gitignore to ONLY have these lines:
 __pycache__/
 *.pyc
-.DS_Store
-
+.venv
+best_model_efficientnet.keras  # Add this to ignore the extra model file
