@@ -111,16 +111,14 @@ history_finetune = model.fit(
 )
 
 # 9. Save final model
-model.save("blackgram_model.keras")  # Simple and modern
-print("Model and class names saved.")
-# After model.save("blackgram_model.keras")
-import hashlib
-def get_file_hash(filename):
-    with open(filename, 'rb') as f:
-        return hashlib.md5(f.read()).hexdigest()
-    
-original_hash = get_file_hash('blackgram_model.keras')
-print(f'🔒 MODEL HASH: {original_hash}')
+# Add to train.py after training completes
+model.save("blackgram_model", save_format="tf")
+model.save("blackgram_model")  # SavedModel format
+model.save("blackgram_model.keras")  # Native Keras format
+model.save_weights("model_weights.h5")  # Weights only
+  # Creates directory instead of single file
+print("Model saved in SavedModel format")
+
 
 # 10. Evaluate with confusion matrix and classification report
 from sklearn.metrics import confusion_matrix, classification_report
