@@ -1,5 +1,4 @@
 tmp_uploads/
-*.keras
 *.h5
 *.jpg
 *.png
