@@ -22,7 +22,7 @@ os.chmod(UPLOAD_FOLDER, 0o755)  # Read/write permissions
 
 # Load model and class names
 try:
-    model = tf.keras.models.load_model('trained_blackgram_model_efficientnet.keras')
+    model = tf.keras.models.load_model('blackgram_model.keras')
     with open('class_names.json') as f:
         class_names = json.load(f)
     print("✅ Model loaded successfully. Classes:", class_names)
@@ -103,3 +103,31 @@ def health_check():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+def load_model_with_retry():
+    try:
+        model = tf.keras.models.load_model('blackgram_model.keras')
+        print("✅ Model loaded directly")
+        return model
+    except:
+        print("⚠️ Attempting backup load method...")
+        try:
+            # Reconstruct from layers (works without file)
+            base_model = tf.keras.applications.EfficientNetB0(
+                include_top=False, 
+                input_shape=(128,128,3)
+            )
+            x = base_model.output
+            x = tf.keras.layers.GlobalAveragePooling2D()(x)
+            x = tf.keras.layers.Dropout(0.5)(x)
+            x = tf.keras.layers.Dense(256, activation='relu')(x)
+            x = tf.keras.layers.Dropout(0.3)(x)
+            outputs = tf.keras.layers.Dense(5, activation='softmax')(x)
+            model = tf.keras.Model(inputs=base_model.input, outputs=outputs)
+            model.load_weights('blackgram_model.keras')  # Load weights only
+            print("✅ Model reconstructed from architecture")
+            return model
+        except Exception as e:
+            print(f"❌ Critical error: {str(e)}")
+            raise
+
+model = load_model_with_retry()
