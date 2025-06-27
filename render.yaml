@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: blackgram-detector
-    runtime: python
-    pythonVersion: "3.9.13"
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app

@@ -18,4 +18,6 @@ tmp_*
 *.jpg
 *.jpeg
 *.h5
-*.keras" > .gitignore
+*.keras
+!model_assets/*.keras
+!model_assets/*.h5" > .gitignore
