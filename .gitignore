@@ -1,5 +1,21 @@
-# Edit .gitignore to ONLY have these lines:
-__pycache__/
+echo "__pycache__/
 *.pyc
-.venv
-best_model_efficientnet.keras  # Add this to ignore the extra model file
+*.pyo
+*.pyd
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.log
+*.tmp
+*.bak
+*.backup
+*.orig
+uploads/
+tmp_*
+*.png
+*.jpg
+*.jpeg
+*.h5
+*.keras" > .gitignore
